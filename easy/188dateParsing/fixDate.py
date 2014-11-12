@@ -1,6 +1,6 @@
 def fixDate(inp):
     m = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'
-    mth = {j:i for i,j in enumerate(' '.split(m))}
+    mth = {j:str(i) for i,j in enumerate(' '.split(m))}
 
     if '/' in inp:
         (m,d,y)=inp.split('/')
