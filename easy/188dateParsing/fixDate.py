@@ -1,16 +1,7 @@
 def fixDate(inp):
-    mth = {'Apr': '3',
- 'Aug': '7',
- 'Dec': '11',
- 'Feb': '1',
- 'Jan': '0',
- 'Jul': '6',
- 'Jun': '5',
- 'Mar': '2',
- 'May': '4',
- 'Nov': '10',
- 'Oct': '9',
- 'Sep': '8'}
+    m = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'
+    mth = {j:i for i,j in enumerate(' '.split(m))}
+
     if '/' in inp:
         (m,d,y)=inp.split('/')
     elif '#' in inp:
