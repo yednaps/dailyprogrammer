@@ -17,8 +17,6 @@ def fixDate(inp):
         (m,y,d)=inp.split('#')
     elif '*' in inp:
         (d,m,y)=inp.split('*')
-#    elif ',' in inp and len(inp) == 10:
-#        (m,y,d)=inp.split(' ')
     elif ',' in inp:
         (m,d,y)=inp.split(' ')
         m = mth[m]
