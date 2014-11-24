@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import re
 from collections import OrderedDict
 
 roman = OrderedDict([('I',1),('V',5),('X',10),('L',50),('C',100),('D',500),('M',1000)])
@@ -11,20 +12,30 @@ bads += [i*4 for i in roman.keys()][:-1]
 ints = [(1000,'M'),(900,'CM'),(500,'D'),(400,'CD'),(100,'C'),(90,'XC'),
         (50,'L'),(40,'XL'),(10,'X'),(9,'X'),(5,'V'),(4,'IV'),(1,'I')]
 
+reg = re.compile(r'([IVXLCDM]+)+')
+
 def r2d(num):
-	if not set(num).issubset(roman.keys()) or [i for i in bads if i in num]: return None
-	if '(' in num or ')' in num:
-		if '(' in num and ')' in num:
-			return 1000 
+	if not set(num).issubset(roman.keys()+['(',')']) or [i for i in bads if i in num]: return None
 	val = 0
-	for i,d in enumerate(num):
-		if i + 1 < len(num):
-			if roman.keys().index(d) < roman.keys().index(num[i+1]):
-				val -= roman[d]
-			else:
-				val += roman[d]
-		else: val += roman[d]
-	return val
+	m = reg.findall(num)
+	m.reverse()
+	if len(m) > 1:
+		for j,s in enumerate(m):
+			val += r2d(s) * 1000**j
+		return val
+	elif '(' and ')' in num:
+		return r2d(m[0]) * 1000**num.count('(')
+	#val = 0
+	else:
+		print num
+		for i,d in enumerate(num):
+			if i + 1 < len(num):
+				if roman.keys().index(d) < roman.keys().index(num[i+1]):
+					val -= roman[d]
+				else:
+					val += roman[d]
+			else: val += roman[d]
+		return val
 
 def d2r(num):
 	if num/5000: 
